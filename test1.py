@@ -15,6 +15,7 @@ import numpy as np'''
 ## librealsense tutorial #1 - Accessing depth data ##
 #####################################################
 
+
 # First import the library
 import pyrealsense2 as rs
 
