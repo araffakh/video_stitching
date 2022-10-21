@@ -62,18 +62,22 @@ try:
             images = np.hstack((color_image, depth_colormap))
 
         #circle for corner of page
-        cv2.circle(images,(226,60),5,(0,0,255),-1)
-        cv2.circle(images,(305,70),5,(0,0,255),-1)
-        cv2.circle(images,(305,175),5,(0,0,255),-1)
-        cv2.circle(images,(226,170),5,(0,0,255),-1)
+        circle_pts=[[226,60],[305,70],[226,170],[305,175]]
+        cv2.circle(images,(circle_pts[0]),5,(0,0,255),-1)
+        cv2.circle(images,(circle_pts[1]),5,(0,0,255),-1)
+        cv2.circle(images,(circle_pts[2]),5,(0,0,255),-1)
+        cv2.circle(images,(circle_pts[3]),5,(0,0,255),-1)
 
-        pts1=np.float32([[26,60],[305,70],[305,175],[226,170]])
-        pts2=np.float32([0,0],[400,0],[0,600],[400,600])
-        matrix=cv2.getPerspectieTransform(pts1,pts2)
-        result=cv2.warpPerspective(frame,matrix,(400,600))
+        pts1=np.float32(circle_pts)
+        pts2=np.float32([[0,0],[400,0],[0,600],[400,600]])
+        matrix=cv2.getPerspectiveTransform(pts1,pts2)
+        result=cv2.warpPerspective(images,matrix,(400,600))
         cv2.imshow('Frame2', result)
 
 
+
+# src: coordinates in the source image
+# dst: coordinates in the output image
 
 
         # Show images
