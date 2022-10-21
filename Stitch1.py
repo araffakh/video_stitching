@@ -54,7 +54,6 @@ try:
 
         depth_colormap_dim = depth_colormap.shape
         color_colormap_dim = color_image.shape
-
         # If depth and color resolutions are different, resize color image to match depth image for display
         if depth_colormap_dim != color_colormap_dim:
             resized_color_image = cv2.resize(color_image, dsize=(depth_colormap_dim[1], depth_colormap_dim[0]), interpolation=cv2.INTER_AREA)
@@ -62,9 +61,24 @@ try:
         else:
             images = np.hstack((color_image, depth_colormap))
 
+        #circle for corner of page
+        cv2.circle(images,(226,60),5,(0,0,255),-1)
+        cv2.circle(images,(305,70),5,(0,0,255),-1)
+        cv2.circle(images,(305,175),5,(0,0,255),-1)
+        cv2.circle(images,(226,170),5,(0,0,255),-1)
+
+        pts1=np.float32([[26,60],[305,70],[305,175],[226,170]])
+        pts2=np.float32([0,0],[400,0],[0,600],[400,600])
+        matrix=cv2.getPerspectieTransform(pts1,pts2)
+        result=cv2.warpPerspective(frame,matrix,(400,600))
+        cv2.imshow('Frame2', result)
+
+
+
+
         # Show images
         cv2.namedWindow('RealSense', cv2.WINDOW_AUTOSIZE)
-        #cv2.imshow('RealSense', images)
+        cv2.imshow('RealSense', images)
 
 
 
